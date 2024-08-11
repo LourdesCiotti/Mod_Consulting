@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+</head>
+<body>
+    <h1>Movie Search</h1>
+    <input type="text" id="search" placeholder="Search movies...">
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('search').addEventListener('input', function() {
+            let query = this.value;
+            fetch(`/search?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '';
+                    data.forEach(movie => {
+                        let movieDiv = document.createElement('div');
+                        movieDiv.innerHTML = `<strong>${movie['Movie Title']}</strong> (${movie['Release Year']}) - ${movie['Genre']} - ${movie['Rotten Tomatoes Score']}% - $${movie['Budget (millions $)']} million`;
+                        resultsDiv.appendChild(movieDiv);
+                    });
+                });
+        });
+    </script>
+</body>
+</html>
