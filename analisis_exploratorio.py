@@ -1,41 +1,41 @@
 import pandas as pd
 
-# Leer el archivo Excel sin encabezados
+# Read the Excel file without headers
 df = pd.read_excel('Movie Data.xlsx', header=None)
-# Separar los datos en columnas usando la coma como separador
-# Solo separamos a partir de la segunda fila (índice 1)
+# Split the data into columns using the comma as a separator
+# We only split from the second row (index 1)
 df[['Movie Title', 'Release Year', 'Budget (millions $)', 'Rotten Tomatoes Score', 'Genre']] = df[0].str.split(',', expand=True)
-# Eliminar la columna original
+# Remove the original column
 df = df.drop(columns=[0])
-# Eliminar la primera fila que contenía los encabezados originales
+# Remove the first row that contained the original headers
 df = df.iloc[1:]
-# Reiniciar los índices
+# Reset the indices
 df.reset_index(drop=True, inplace=True)
-# Mostrar el DataFrame resultante
+# Display the resulting DataFrame
 print(df)
 
-# Mostrar la cantidad de filas y columnas
+# Show the number of rows and columns
 print(df.shape)
-# Mostrar las columnas del DataFrame
+# Show the columns of the DataFrame
 print(df.columns)
-# Mostrar las primeras filas del DataFrame
+# Show the first few rows of the DataFrame
 print(df.head())
-# Mostrar información del DataFrame
+# Show information about the DataFrame
 print(df.info())
-# Mostrar estadísticas del DataFrame
+# Show statistics about the DataFrame
 print(df.describe())
 
-# Mostrar la cantidad de categorías y sus valores únicos para cada columna
+# Show the number of categories and their unique values for each column
 for column in df.columns:
     unique_categories = df[column].nunique()
     categories = df[column].unique()
-    print(f"Columna: {column}")
-    print(f"Cantidad de categorías: {unique_categories}")
-    print(f"Categorías: {', '.join(map(str, categories))}")
+    print(f"Column: {column}")
+    print(f"Number of categories: {unique_categories}")
+    print(f"Categories: {', '.join(map(str, categories))}")
     print()
 
-    # Contar el total de cada categoría en la columna
+    # Count the total for each category in the column
     category_counts = df[column].value_counts()
-    print(f"Total de cada categoría en la columna {column}:")
+    print(f"Total for each category in the column {column}:")
     print(category_counts)
     print()
